@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded",(event)=>{
+
+    // BOOK ADDITION LOGIC
     const myLibrary = [];
+    const cardContainer = document.getElementById('cardContainer');
 
     function Book(title,author,pages,haveRead){
         if(!new.target){
             console.log("Can't create this without an object mate.");
         }
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.haveRead = haveRead;
-        this.id = crypto.randomUUID();
-        // this.info = function(){
-        //     console.log(title+" by "+author+", "+pages+" pages"+", "+haveRead);
-        //     }
+        this.Title = title;
+        this.Author = author;
+        this.Pages = pages;
+        this.HaveRead = haveRead;
+        this.Id = crypto.randomUUID();
     }
 
     function addToLibrary(Book, title, author, pages, haveRead){
@@ -20,11 +20,23 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         myLibrary.push(book);
     }
 
+    function createText(a){
+        return document.createTextNode(a);
+    }
+
+    // DISPLAYING BOOKS TO DOCUMENT
     function displayBooks(){
         for(const book of myLibrary){
+            const insideCardContainer = document.createElement('div');
             for(const info in book){
-                console.log(`${info}:${book[info]}`)
+                console.log(`${info}:${book[info]}`);
+                text = createText(`${info}: ${book[info]}`);
+                const newDiv = document.createElement('div');
+                newDiv.append(text);
+                newDiv.classList.add('card');
+                insideCardContainer.append(newDiv);
             }
+            cardContainer.append(insideCardContainer);
         }
     }
 
@@ -34,6 +46,4 @@ document.addEventListener("DOMContentLoaded",(event)=>{
 
     console.table(myLibrary);
     displayBooks();
-
-
 });
