@@ -19,8 +19,24 @@
             
         </section>
         <div class="buttonContainer">
-            <button id="addBook">
-                ADD BOOK
+            <dialog id="my-dialog">
+                <p>Enter book attributes: </p>
+                <form action="submit" class="form" id="inputForm">
+                    <label for="title">Title: </label><br>
+                    <input type="text" id="title" name="title"><br>
+                    <label for="author" id="author">Author: </label><br>
+                    <input type="text" id="author" name="author"><br>
+                    <label for="pages" id="pages">Pages: </label><br>
+                    <input type="text" id="pages" name="pages"><br>
+                    <label for="readStatus">Read Yet?: </label><br>
+                    <input type="text" id="readStatus" name="readStatus"><br>
+                </form> 
+                <button form="inputForm" id="submitButton">Add</button>
+                <!-- <button type="submit" commandfor="my-dialog" command="close" class="close">Close</button> -->
+                <button commandfor="my-dialog" command="close" class="close">Close</button>
+            </dialog>
+            <button command="show-modal" commandfor="my-dialog" id="addButton" id="addBook">
+                <h4>Add Book</h4>
             </button>
         </div>
     </div>
