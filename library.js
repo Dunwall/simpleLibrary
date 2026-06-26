@@ -1,61 +1,62 @@
-document.addEventListener("DOMContentLoaded",(event)=>{
-
-    // BOOK ADDITION LOGIC
-    const myLibrary = [];
-    const cardContainer = document.getElementById('cardContainer');
-    const addButton = document.getElementById('addBook');
-
-    function Book(title,author,pages,haveRead){
-        if(!new.target){
-            console.log("Can't create this without an object mate.");
-        }
-        this.Title = title;
-        this.Author = author;
-        this.Pages = pages;
-        this.HaveRead = haveRead;
-        this.Id = crypto.randomUUID();
-    }
-
-    function addToLibrary(Book, title, author, pages, haveRead){
-        let book = new Book(title, author, pages, haveRead);
-        myLibrary.push(book);
-    }
+document.addEventListener("DOMContentLoaded",function(){
+    const library = [];
+    // DOM elements
+    const container = document.querySelector("#cardContainer");
     
-    addButton.addEventListener('click',function(e){
-        this.title = prompt('Enter Book Title');
-        this.author = prompt('Enter Book Author');
-        this.pages = prompt('Enter number of pages');
-        this.haveRead = prompt('Have you read this yet?','Not Yet');
-        addToLibrary(Book, this.title, this.author, this.pages, this.haveRead);
-    });
-    
-    function createText(a){
-        return document.createTextNode(a);
+
+    function Book(title, author, pages, readStatus){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = readStatus;
+        this.id = crypto.randomUUID();
     }
 
-    // DISPLAYING BOOKS TO DOCUMENT
-    function displayBooks(){
-        for(const book of myLibrary){
-            const insideCardContainer = document.createElement('div');
-            for(const info in book){
-                console.log(`${info}:${book[info]}`);
-                text = createText(`${info}: ${book[info]}`);
-                const newDiv = document.createElement('div');
-                newDiv.append(text);
-                newDiv.classList.add('card');
-                insideCardContainer.append(newDiv);
-                insideCardContainer.classList.add('insideCardContainer');
-            }
-            cardContainer.append(insideCardContainer);
-        }
+    function addBookToLibrary(title,author,pages,readStatus){
+        library.push(new Book(title,author,pages,readStatus));
     }
 
-    addToLibrary(Book, 'The Brothers Karamazov','Fyodor Dostoevsky',600,'Not Yet');
-    addToLibrary(Book, 'War and Peace','Leo Tolstoy',6000,'Not Yet');
-    addToLibrary(Book, 'Lord of the Flies','Willen Golding',1000,'Not Yet');
-    addToLibrary(Book, 'To Kill A Mockingbird','Harper Lee',3000,'Read');
-    addToLibrary(Book, 'Kafka on the Shore','Haruki Murakami',3000,'Read');
-    
-    console.table(myLibrary);
-    displayBooks();
-});
+    addBookToLibrary('Watchmen','Alan Moore',420,'Yes');
+    addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',420,'Yes');
+    addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',420,'Yes');
+
+    function addBooksToPage(book){
+             const newDiv = document.createElement('div');
+            
+            const titleValue = document.createElement('p');
+            titleValue.textContent = `${book.title}`;
+            
+            const title = document.createElement('h3');
+            title.textContent = `Title`;
+
+            const author = document.createElement('h3');
+            author.textContent = 'Author';
+
+            const authorValue = document.createElement('p');
+            authorValue.textContent = `${book.author}`;
+
+            const pages = document.createElement('h3');
+            pages.textContent = 'Pages';
+
+            const pagesValue = document.createElement('p');
+            pagesValue.textContent = `${book.pages}`;
+
+            const readStatus = document.createElement('h3');
+            readStatus.textContent = 'Read Yet';
+
+            const readValue = document.createElement('p');
+            readValue.textContent = `${book.read}`;
+
+            newDiv.append(title);
+            newDiv.append(titleValue);
+            newDiv.append(author);
+            newDiv.append(authorValue);
+            newDiv.append(pages);
+            newDiv.append(pagesValue);
+            newDiv.append(readStatus);
+            newDiv.append(readValue);
+            newDiv.classList.add('insideCardContainer');
+            container.append(newDiv);
+    }
+    library.forEach(addBooksToPage);
+})
