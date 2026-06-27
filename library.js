@@ -17,8 +17,10 @@ document.addEventListener("DOMContentLoaded",function(){
         this.title = title;
         this.author = author;
         this.pages = pages;
-        this.read = readStatus;
         this.id = crypto.randomUUID();
+        Book.prototype.toggleRead = () =>{
+            this.read = !this.read
+        }
     }
 
     // FUNCTION TO ADD OBJECTS TO LIBRARY
@@ -28,9 +30,9 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     // DEFAULT BOOKS ADDED
-    addBookToLibrary('Watchmen','Alan Moore',420,'Yes');
-    addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',420,'Yes');
-    addBookToLibrary('Saga of the Swamp Thing','Alan Moore',420,'Yes');
+    addBookToLibrary('Watchmen','Alan Moore',420);
+    addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',420);
+    addBookToLibrary('Saga of the Swamp Thing','Alan Moore',420);
 
 
     // FUNCTION TO DELETE BOOK OBJECT FROM THE ARRAY
@@ -56,34 +58,22 @@ document.addEventListener("DOMContentLoaded",function(){
 
         const card = document.createElement('div');        
 
-        const title = document.createElement('h3');
+        const title = document.createElement('h4');
         title.textContent = `${book.title}`;
 
-        // const author = document.createElement('h3');
-        // author.textContent = 'Author';
+        const author = document.createElement('p');
+        author.textContent = `By ${book.author}`;
 
-        const authorValue = document.createElement('p');
-        authorValue.textContent = `By ${book.author}`;
-
-        const pages = document.createElement('h3');
+        const pages = document.createElement('h4');
         pages.textContent = 'Pages';
 
         const pagesValue = document.createElement('p');
         pagesValue.textContent = `${book.pages}`;
 
-        const readStatus = document.createElement('h3');
-        readStatus.textContent = 'Read Yet';
-
-        const readValue = document.createElement('p');
-        readValue.textContent = `${book.read}`;
-
         card.append(title);
-        // card.append(author);
-        card.append(authorValue);
+        card.append(author);
         card.append(pages);
         card.append(pagesValue);
-        card.append(readStatus);
-        card.append(readValue);
         card.classList.add('insideCardContainer');
 
         container.append(card);
@@ -94,12 +84,11 @@ document.addEventListener("DOMContentLoaded",function(){
             deleteBook(card);
 
             // DISPLAYING AFTER DELETING BOOK
-            library.forEach(displayBooksToPage);
+            // library.forEach(displayBooksToPage);
         })
     }
     // DISPLAYING AFTER DEFAULT BOOKS
     library.forEach(displayBooksToPage);
-  
     
     // EVENT LISTENER FOR WHEN FORM IS SUBMITTED
     form.addEventListener("submit", (e) => {
@@ -107,8 +96,7 @@ document.addEventListener("DOMContentLoaded",function(){
         let title = titleInput.value;
         let author = authorInput.value;
         let pages = pagesInput.value;
-        let readStat = readInput.value;
-        addBookToLibrary(title,author,pages,readStat);
+        addBookToLibrary(title,author,pages);
         form.reset();
 
         // DISPLAYING AFTER ADDING A BOOK
