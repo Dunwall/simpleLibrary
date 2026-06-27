@@ -7,8 +7,12 @@ document.addEventListener("DOMContentLoaded",function(){
     const authorInput = document.querySelector("#author");
     const pagesInput = document.querySelector("#title");
     const readInput = document.querySelector("#readStatus");
+    var counter = 3;
+    // BUTTON FOR REMOVING BOOKS
+    // const delBtn = document.createElement("button");
+    // delBtn.innerHTML = "Delete";
 
-
+    // CONSTRUCTOR FOR CREATING BOOK OBJECTS
     function Book(title, author, pages, readStatus){
         this.title = title;
         this.author = author;
@@ -17,18 +21,41 @@ document.addEventListener("DOMContentLoaded",function(){
         this.id = crypto.randomUUID();
     }
 
+    // FUNCTION TO ADD OBJECTS TO LIBRARY
     function addBookToLibrary(title,author,pages,readStatus){
-        library.push(new Book(title,author,pages,readStatus));
+        const book = new Book(title,author,pages,readStatus)
+        library.push(book);
     }
 
+    // DEFAULT BOOKS ADDED
     addBookToLibrary('Watchmen','Alan Moore',420,'Yes');
     addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',420,'Yes');
     addBookToLibrary('Saga of the Swamp Thing','Alan Moore',420,'Yes');
 
-    function addBooksToPage(book){
-            
-        const newDiv = document.createElement('div');
-            
+
+    // FUNCTION TO DELETE BOOK OBJECT FROM THE ARRAY
+    function deleteBook(card){
+        let cardId = card.dataset.id;
+        for(const book of library){
+            if(cardId === book.id){
+                console.log(book.id);
+                const index = library.indexOf(book);
+                if(index>-1){
+                    library.splice(index,1);
+                }
+            }
+        }
+    }
+
+    // DISPLAY BOOKS TO THE DOCUMENT
+    function displayBooksToPage(book){
+        // BUTTON FOR REMOVING BOOKS
+        const delBtn = document.createElement("button");
+        delBtn.innerHTML = "Delete";
+        delBtn.classList.add("button");
+
+        const card = document.createElement('div');        
+
         const title = document.createElement('h3');
         title.textContent = `${book.title}`;
 
@@ -50,19 +77,31 @@ document.addEventListener("DOMContentLoaded",function(){
         const readValue = document.createElement('p');
         readValue.textContent = `${book.read}`;
 
-        newDiv.append(title);
-        // newDiv.append(author);
-        newDiv.append(authorValue);
-        newDiv.append(pages);
-        newDiv.append(pagesValue);
-        newDiv.append(readStatus);
-        newDiv.append(readValue);
-        newDiv.classList.add('insideCardContainer');
-        container.append(newDiv);
+        card.append(title);
+        // card.append(author);
+        card.append(authorValue);
+        card.append(pages);
+        card.append(pagesValue);
+        card.append(readStatus);
+        card.append(readValue);
+        card.classList.add('insideCardContainer');
+
+        container.append(card);
+        card.append(delBtn);
+
+        card.setAttribute('data-id',book.id);
+        delBtn.addEventListener("click",(e)=>{
+            deleteBook(card);
+
+            // DISPLAYING AFTER DELETING BOOK
+            library.forEach(displayBooksToPage);
+        })
     }
-    library.forEach(addBooksToPage);
-
-
+    // DISPLAYING AFTER DEFAULT BOOKS
+    library.forEach(displayBooksToPage);
+  
+    
+    // EVENT LISTENER FOR WHEN FORM IS SUBMITTED
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         let title = titleInput.value;
@@ -71,8 +110,11 @@ document.addEventListener("DOMContentLoaded",function(){
         let readStat = readInput.value;
         addBookToLibrary(title,author,pages,readStat);
         form.reset();
-        for(let i=3;i<library.length;i++){
-            addBooksToPage(library[i]);
+
+        // DISPLAYING AFTER ADDING A BOOK
+        for(let i=counter;i<library.length;i++){
+            displayBooksToPage(library[i]);
         }
+        counter+=1;
     })
 })
