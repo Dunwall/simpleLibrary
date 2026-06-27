@@ -5,12 +5,7 @@ document.addEventListener("DOMContentLoaded",function(){
     const form = document.querySelector("#inputForm");
     const titleInput = document.querySelector("#title");
     const authorInput = document.querySelector("#author");
-    const pagesInput = document.querySelector("#title");
-    const readInput = document.querySelector("#readStatus");
-    var counter = 3;
-    // BUTTON FOR REMOVING BOOKS
-    // const delBtn = document.createElement("button");
-    // delBtn.innerHTML = "Delete";
+    const pagesInput = document.querySelector("#pages");
 
     // CONSTRUCTOR FOR CREATING BOOK OBJECTS
     function Book(title, author, pages, readStatus){
@@ -24,8 +19,8 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     // FUNCTION TO ADD OBJECTS TO LIBRARY
-    function addBookToLibrary(title,author,pages,readStatus){
-        const book = new Book(title,author,pages,readStatus)
+    function addBookToLibrary(title,author,pages){
+        const book = new Book(title,author,pages);
         library.push(book);
     }
 
@@ -34,7 +29,7 @@ document.addEventListener("DOMContentLoaded",function(){
     addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',420);
     addBookToLibrary('Saga of the Swamp Thing','Alan Moore',420);
 
-
+    var counter = library.length;
     // FUNCTION TO DELETE BOOK OBJECT FROM THE ARRAY
     function deleteBook(card){
         let cardId = card.dataset.id;
@@ -84,7 +79,7 @@ document.addEventListener("DOMContentLoaded",function(){
             deleteBook(card);
 
             // DISPLAYING AFTER DELETING BOOK
-            // library.forEach(displayBooksToPage);
+            library.forEach(displayBooksToPage);
         })
     }
     // DISPLAYING AFTER DEFAULT BOOKS
@@ -96,6 +91,9 @@ document.addEventListener("DOMContentLoaded",function(){
         let title = titleInput.value;
         let author = authorInput.value;
         let pages = pagesInput.value;
+        console.log(title);
+        console.log(author);
+        console.log(pages);
         addBookToLibrary(title,author,pages);
         form.reset();
 
