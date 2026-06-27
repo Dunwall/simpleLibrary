@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded",function(){
     const titleInput = document.querySelector("#title");
     const authorInput = document.querySelector("#author");
     const pagesInput = document.querySelector("#pages");
-
+    var top = -1;
     // CONSTRUCTOR FOR CREATING BOOK OBJECTS
     function Book(title, author, pages, readStatus){
         this.title = title;
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded",function(){
     function addBookToLibrary(title,author,pages){
         const book = new Book(title,author,pages);
         library.push(book);
+        top+=1;
     }
 
     // DEFAULT BOOKS ADDED
@@ -29,7 +30,6 @@ document.addEventListener("DOMContentLoaded",function(){
     addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',420);
     addBookToLibrary('Saga of the Swamp Thing','Alan Moore',420);
 
-    var counter = library.length;
     // FUNCTION TO DELETE BOOK OBJECT FROM THE ARRAY
     function deleteBook(card){
         let cardId = card.dataset.id;
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded",function(){
         card.setAttribute('data-id',book.id);
         delBtn.addEventListener("click",(e)=>{
             deleteBook(card);
-
+            top -= 1;
             // DISPLAYING AFTER DELETING BOOK
             library.forEach(displayBooksToPage);
         })
@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded",function(){
     // DISPLAYING AFTER DEFAULT BOOKS
     library.forEach(displayBooksToPage);
     
+    // var counter = library.length;
     // EVENT LISTENER FOR WHEN FORM IS SUBMITTED
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -98,9 +99,9 @@ document.addEventListener("DOMContentLoaded",function(){
         form.reset();
 
         // DISPLAYING AFTER ADDING A BOOK
-        for(let i=counter;i<library.length;i++){
-            displayBooksToPage(library[i]);
-        }
-        counter+=1;
+        // for(let i=counter;i<library.length;i++){
+        displayBooksToPage(library[top]);
+        // }
+        // counter+=1;
     })
 })
