@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded",function(){
     const titleInput = document.querySelector("#title");
     const authorInput = document.querySelector("#author");
     const pagesInput = document.querySelector("#pages");
+    const readInput = document.querySelector('#readStatus');
     var top = -1;
 
     // CONSTRUCTOR FOR CREATING BOOK OBJECTS
@@ -13,10 +14,9 @@ document.addEventListener("DOMContentLoaded",function(){
         this.title = title;
         this.author = author;
         this.pages = pages;
-        this.id = crypto.randomUUID();
-
         // INITIALIZING READ VALUE
         this.read = true;
+        this.id = crypto.randomUUID();
     }
 
     // PROTOTYPE TO TOGGLE READ STATUS AND INDICATE CHANGES
@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     // DISPLAY BOOKS TO THE DOCUMENT
     function displayBooksToPage(book){
+        
         // CREATING DOM ELEMENTS
         const delBtn = document.createElement("button");
         const readBtn = document.createElement("button");
@@ -74,7 +75,6 @@ document.addEventListener("DOMContentLoaded",function(){
 
         // CREATE CARD AND MAIN CONTENT
         const card = document.createElement('div');        
-
         const title = document.createElement('h4');
         title.textContent = `${book.title}`;
 
@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded",function(){
             deleteBook(card);
             top -= 1;
             // DISPLAYING AFTER DELETING BOOK
+            container.innerHTML = " ";
             library.forEach(displayBooksToPage);
         })
     }
@@ -124,9 +125,7 @@ document.addEventListener("DOMContentLoaded",function(){
         let title = titleInput.value;
         let author = authorInput.value;
         let pages = pagesInput.value;
-        console.log(title);
-        console.log(author);
-        console.log(pages);
+        let read = readInput.value;
         addBookToLibrary(title,author,pages);
         form.reset();
 
