@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded",function(){
 
     // CONSTRUCTOR FOR CREATING BOOK OBJECTS
     function Book(title, author, pages,read){
+        if(!new.target){
+            throw new TypeError ("calling Book without new is invalid");
+        }
         this.title = title;
         this.author = author;
         this.pages = pages;
