@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded",function(){
         this.pages = pages;
         // INITIALIZING READ VALUE
         this.read = read;
-        console.log(read);
         this.id = crypto.randomUUID();
     }
 
@@ -25,11 +24,11 @@ document.addEventListener("DOMContentLoaded",function(){
         book.read=!book.read;
         if(book.read == false){
             card.classList.add('bookUnread');
-            readBtn.innerHTML = 'Unread';
+            readBtn.innerHTML = `<h4>Unread</h4>`;
         }
         else{
             card.classList.remove('bookUnread');
-            readBtn.innerHTML = 'Read';
+            readBtn.innerHTML = `<h4>Read</h4>`;
         }
     }
 
@@ -41,16 +40,15 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     // DEFAULT BOOKS ADDED
-    addBookToLibrary('Watchmen','Alan Moore',420,null);
-    addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',40,null);
-    addBookToLibrary('Saga of the Swamp Thing','Alan Moore',200,null);
+    addBookToLibrary('Watchmen','Alan Moore',420,false);
+    addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',40,false);
+    addBookToLibrary('Saga of the Swamp Thing','Alan Moore',200,true);
 
     // FUNCTION TO DELETE BOOK OBJECT FROM THE ARRAY
     function deleteBook(card){
         let cardId = card.dataset.id;
         for(const book of library){
             if(cardId === book.id){
-                console.log(book.id);
                 const index = library.indexOf(book);
                 if(index>-1){
                     library.splice(index,1);
@@ -67,11 +65,11 @@ document.addEventListener("DOMContentLoaded",function(){
         const readBtn = document.createElement("button");
 
         // STYLE DELETE BUTTON
-        delBtn.innerHTML = "Delete";
+        delBtn.innerHTML = `<h4>Delete</h4>`;
         delBtn.classList.add("button");
 
         // STYLE READ BUTTON
-        readBtn.innerHTML = 'Read';
+        readBtn.innerHTML = `<h4>Read</h4>`;
         readBtn.classList.add('button');
 
         // CREATE CARD AND MAIN CONTENT
@@ -101,7 +99,12 @@ document.addEventListener("DOMContentLoaded",function(){
             book.toggleRead(book,card,readBtn);
         })
         
-        card.classList.add('insideCardContainer');
+        // CHECKING IF BOOK OBJECT READ STATUS TRUE OR FALSE BEFORE APPENDING CARD
+        if(book.read === false){
+            card.classList.add('bookUnread');
+            readBtn.innerHTML = `<h4>Unread</h4>`;
+        }
+        card.classList.add('cardStyle');
         container.append(card);
     
         // SETTING CARDS ATTRIBUTE TO BOOK ID
@@ -126,10 +129,11 @@ document.addEventListener("DOMContentLoaded",function(){
         let title = titleInput.value;
         let author = authorInput.value;
         let pages = pagesInput.value;
-        let read = readInput.value;
+        let read = readInput.checked;
+        
         addBookToLibrary(title,author,pages,read);
         form.reset();
-
+        console.log(read);
         // DISPLAYING AFTER ADDING A BOOK
         displayBooksToPage(library[top]);
     })
