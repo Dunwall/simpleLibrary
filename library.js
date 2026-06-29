@@ -10,12 +10,13 @@ document.addEventListener("DOMContentLoaded",function(){
     var top = -1;
 
     // CONSTRUCTOR FOR CREATING BOOK OBJECTS
-    function Book(title, author, pages){
+    function Book(title, author, pages,read){
         this.title = title;
         this.author = author;
         this.pages = pages;
         // INITIALIZING READ VALUE
-        this.read = true;
+        this.read = read;
+        console.log(read);
         this.id = crypto.randomUUID();
     }
 
@@ -33,16 +34,16 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     // FUNCTION TO ADD OBJECTS TO LIBRARY
-    function addBookToLibrary(title,author,pages){
-        const book = new Book(title,author,pages);
+    function addBookToLibrary(title,author,pages,read){
+        const book = new Book(title,author,pages,read);
         library.push(book);
         top+=1;
     }
 
     // DEFAULT BOOKS ADDED
-    addBookToLibrary('Watchmen','Alan Moore',420);
-    addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',40);
-    addBookToLibrary('Saga of the Swamp Thing','Alan Moore',200);
+    addBookToLibrary('Watchmen','Alan Moore',420,null);
+    addBookToLibrary('Whatever Happened to the Man of Tomorrow?','Alan Moore',40,null);
+    addBookToLibrary('Saga of the Swamp Thing','Alan Moore',200,null);
 
     // FUNCTION TO DELETE BOOK OBJECT FROM THE ARRAY
     function deleteBook(card){
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded",function(){
         let author = authorInput.value;
         let pages = pagesInput.value;
         let read = readInput.value;
-        addBookToLibrary(title,author,pages);
+        addBookToLibrary(title,author,pages,read);
         form.reset();
 
         // DISPLAYING AFTER ADDING A BOOK
